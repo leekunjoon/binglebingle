@@ -74,7 +74,7 @@ input:focus{border-color:#97C459;box-shadow:0 0 0 2px #EAF3DE}
     <div class="tags" id="fTags"></div>
   </div>
   <div class="err" id="err"></div>
-  <button class="gen-btn" onclick="generate()">스케줄 생성하기</button>
+  <button class="gen-btn" onclick="generate()">랜덤 스케줄 생성하기</button>
   <div id="out" style="margin-top:1.25rem"></div>
 </div>
 <script>
@@ -163,7 +163,8 @@ function generate(){
     document.getElementById('err').textContent='형제·자매 각 1명 이상 입력해주세요.';return;
   }
   const startTime=document.getElementById('startTime').value||'19:40';
-  const result = buildSchedule(males, females);
+  const shuffle = arr => [...arr].sort(()=>Math.random()-.5);
+  const result = buildSchedule(shuffle(males), shuffle(females));
   const cvs = drawCanvas(result, startTime);
   const out=document.getElementById('out');
   out.innerHTML='';
