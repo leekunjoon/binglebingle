@@ -173,8 +173,20 @@ function generate(){
   wrap.appendChild(cvs);out.appendChild(wrap);
   const dlB=document.createElement('button');
   dlB.className='dl-btn';
-  dlB.textContent='⬇ 이미지 다운로드';
-  dlB.onclick=()=>{const a=document.createElement('a');a.download='빙글빙글룰렛_스케줄.png';a.href=cvs.toDataURL('image/png');a.click();};
+  dlB.textContent='📷 이미지 저장하기';
+  dlB.onclick=()=>{
+    const imgUrl=cvs.toDataURL('image/png');
+    // 모달 오버레이
+    const overlay=document.createElement('div');
+    overlay.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem';
+    overlay.innerHTML=`
+      <p style="color:#fff;font-size:15px;font-weight:500;margin-bottom:12px;text-align:center">👇 아래 이미지를 길게 눌러서 저장하세요</p>
+      <img src="${imgUrl}" style="max-width:95%;max-height:75vh;border-radius:8px;background:#fff">
+      <button onclick="this.parentElement.remove()" style="margin-top:16px;padding:10px 28px;background:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;color:#1a1a18">✕ 닫기</button>
+    `;
+    overlay.addEventListener('click',(e)=>{if(e.target===overlay)overlay.remove();});
+    document.body.appendChild(overlay);
+  };
   out.appendChild(dlB);
 }
 
